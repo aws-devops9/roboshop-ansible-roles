@@ -16,23 +16,25 @@
   register: users_count
   when: component == "user"
 
-- name: Print the count
+- name: Print the catalogue count
   ansible.builtin.debug:
     msg: "product count is: {{products_count}}"
   when: component == "catalogue" 
 
-- name: Print the count
+- name: Print the users count
   ansible.builtin.debug:
     msg: "users count is: {{users_count}}"
   when: component == "user" 
 
-- name: load {{component}} data into mongodb
+- name: load catalogue data into mongodb
   ansible.builtin.shell: mongo --host mongodb.learndevops.space < /app/schema/{{component}}.js
   when: products_count.stdout == "0" and component == "catalogue"
+  ignore_errors: true 
 
-- name: load {{component}} data into mongodb
+- name: load user data into mongodb
   ansible.builtin.shell: mongo --host mongodb.learndevops.space < /app/schema/{{component}}.js
   when: users_count.stdout == "0" and component == "user" 
+  ignore_errors: true
 
 - name: enable and start catalogue
   ansible.builtin.service:
