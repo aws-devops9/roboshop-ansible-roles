@@ -6,12 +6,12 @@
 - name: java setup
   ansible.builtin.import_role: 
     name: common
-    tasks_from: nodejs
+    tasks_from: java
 
 - name: mysql setup
   ansible.builtin.import_role: 
     name: common
-    tasks_from: mongodb-setup 
+    tasks_from: mysql-setup 
 
 - name: systemd setup
   ansible.builtin.import_role: 
