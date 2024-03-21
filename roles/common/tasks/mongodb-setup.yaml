@@ -8,21 +8,31 @@
 
 - name: get the catalogue entries count
   ansible.builtin.command: mongo --host mongodb.learndevops.space --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
-  register: entries_count
+  register: products_count
   when: component == "catalogue"
 
 - name: get the user entries count
   ansible.builtin.command: mongo --host mongodb.learndevops.space --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
-  register: entries_count
+  register: users_count
   when: component == "user"
 
 - name: Print the count
   ansible.builtin.debug:
-    msg: "entries count is: {{entries_count}}"
+    msg: "product count is: {{products_count}}"
+  when: component == "catalogue" 
+
+- name: Print the count
+  ansible.builtin.debug:
+    msg: "users count is: {{users_count}}"
+  when: component == "user" 
 
 - name: load {{component}} data into mongodb
   ansible.builtin.shell: mongo --host mongodb.learndevops.space < /app/schema/{{component}}.js
-  when: entries_count.stdout == "0"
+  when: products_count.stdout == "0" and component == "catalogue"
+
+- name: load {{component}} data into mongodb
+  ansible.builtin.shell: mongo --host mongodb.learndevops.space < /app/schema/{{component}}.js
+  when: users_count.stdout == "0" and component == "user" 
 
 - name: enable and start catalogue
   ansible.builtin.service:
