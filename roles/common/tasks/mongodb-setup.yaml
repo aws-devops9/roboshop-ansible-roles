@@ -9,12 +9,12 @@
 - name: get the entries count
   ansible.builtin.command: mongo --host mongodb.learndevops.space --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
   register: entries_count
-  when: componenet == "catalogue"
+  when: component == "catalogue"
 
 - name: get the entries count
   ansible.builtin.command: mongo --host mongodb.learndevops.space --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
   register: entries_count
-  when: componenet == "user"
+  when: component == "user"
 
 - name: Print the count
   ansible.builtin.debug:
