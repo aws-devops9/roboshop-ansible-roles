@@ -2,3 +2,4 @@ MONGODB_HOST: mongodb.learndevops.space
 REDIS_HOST: redis.learndevops.space
 USER_HOST: user.learndevops.space
 CATALOGUE_HOST: catalogue.learndevops.space
+CART_HOST: cart.learndevops.space
