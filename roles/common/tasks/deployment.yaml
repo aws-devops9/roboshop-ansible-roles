@@ -1,7 +1,7 @@
 - name: stop {{component}}
   tags:
     - deployment
-  ansible.builtin.dnf:
+  ansible.builtin.service:
     name: "{{component}}"
     state: stopped
 
