@@ -36,8 +36,3 @@
   when: users_count.stdout == "0" and component == "user" 
   ignore_errors: true
 
-- name: enable and start catalogue
-  ansible.builtin.service:
-    name: catalogue
-    enabled: yes 
-    state: restarted
