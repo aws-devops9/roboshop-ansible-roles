@@ -7,12 +7,12 @@
   ansible.builtin.shell: dnf install mongodb-org-shell -y
 
 - name: get the catalogue entries count
-  ansible.builtin.command: mongo --host mongodb.learndevops.space --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+  ansible.builtin.command: mongo --host {{MONGODB_HOSTS}} --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
   register: products_count
   when: component == "catalogue"
 
 - name: get the user entries count
-  ansible.builtin.command: mongo --host mongodb.learndevops.space --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
+  ansible.builtin.command: mongo --host {{MONGODB_HOSTS}} --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
   register: users_count
   when: component == "user"
 
@@ -27,12 +27,12 @@
   when: component == "user" 
 
 - name: load catalogue data into mongodb
-  ansible.builtin.shell: mongo --host mongodb.learndevops.space < /app/schema/{{component}}.js
+  ansible.builtin.shell: mongo --host {{MONGODB_HOSTS}} < /app/schema/{{component}}.js
   when: products_count.stdout == "0" and component == "catalogue"
   ignore_errors: true 
 
 - name: load user data into mongodb
-  ansible.builtin.shell: mongo --host mongodb.learndevops.space < /app/schema/{{component}}.js
+  ansible.builtin.shell: mongo --host {{MONGODB_HOSTS}} < /app/schema/{{component}}.js
   when: users_count.stdout == "0" and component == "user" 
   ignore_errors: true
 
