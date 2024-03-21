@@ -9,6 +9,6 @@
   tags:
     - deployment
   ansible.builtin.file:
-    path: /app
+    path: "/app/*"
     state: absent
 
