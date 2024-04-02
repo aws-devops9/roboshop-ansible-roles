@@ -16,7 +16,7 @@
     state: started 
 
 - name: add user and password
-  ansible.builtin.command: rabbitmqctl add_user roboshop roboshop123
+  ansible.builtin.command: "rabbitmqctl add_user {{rq_user}} {{rq_password}}"
 
 - name: set permissions to user
   ansible.builtin.command: rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
